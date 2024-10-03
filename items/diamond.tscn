@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://bnimftkxquiap"]
+
+[ext_resource type="Texture2D" uid="uid://difcjq5tq34bj" path="res://assets/sprites/6416diamond.png" id="1_sj2ib"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kmxck"]
+atlas = ExtResource("1_sj2ib")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_twngj"]
+atlas = ExtResource("1_sj2ib")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hht4i"]
+atlas = ExtResource("1_sj2ib")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2h1o2"]
+atlas = ExtResource("1_sj2ib")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hptv7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kmxck")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_twngj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hht4i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2h1o2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Diamond" type="AnimatedSprite2D"]
+position = Vector2(310.001, 153.999)
+rotation = -1.5708
+sprite_frames = SubResource("SpriteFrames_hptv7")
+frame = 2
+frame_progress = 0.443218

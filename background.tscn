@@ -1,0 +1,35 @@
+[gd_scene load_steps=11 format=3 uid="uid://do6eseojjwb88"]
+
+[ext_resource type="Texture2D" uid="uid://dq6dmi1p1k8ks" path="res://assets/sprites/test_stars.png" id="1_i8ll7"]
+[ext_resource type="PackedScene" uid="uid://byjkn4q5rpo5y" path="res://planets/earth.tscn" id="2_2k8wk"]
+[ext_resource type="Script" path="res://scripts/sliding_tiles.gd" id="2_m1m8r"]
+[ext_resource type="Script" path="res://scripts/background.gd" id="2_rgebx"]
+[ext_resource type="PackedScene" uid="uid://3pugps1l3kwu" path="res://planets/jupiter.tscn" id="3_dp0ui"]
+[ext_resource type="PackedScene" uid="uid://c0vxmngg1b65v" path="res://planets/bg_element.tscn" id="4_3x3mj"]
+[ext_resource type="PackedScene" uid="uid://drtp3t5rvy2xe" path="res://planets/mars.tscn" id="4_b0l3i"]
+[ext_resource type="PackedScene" uid="uid://sdw8orlmwhre" path="res://planets/moon.tscn" id="5_gbtw7"]
+[ext_resource type="PackedScene" uid="uid://dvj88iutpxqiw" path="res://stars/stars_1.tscn" id="7_mc811"]
+[ext_resource type="PackedScene" uid="uid://bnoqv0r34ldak" path="res://stars/stars_2.tscn" id="8_y2kvy"]
+
+[node name="Background" type="Node2D"]
+position = Vector2(450, 0)
+rotation = 1.5708
+script = ExtResource("2_rgebx")
+planets = Array[PackedScene]([ExtResource("2_2k8wk"), ExtResource("5_gbtw7"), ExtResource("4_b0l3i"), ExtResource("3_dp0ui")])
+stars = Array[PackedScene]([ExtResource("7_mc811"), ExtResource("8_y2kvy")])
+bg_element = ExtResource("4_3x3mj")
+
+[node name="SlidingTiles" type="Node2D" parent="."]
+script = ExtResource("2_m1m8r")
+
+[node name="bg_1" type="TextureRect" parent="SlidingTiles"]
+offset_right = 800.0
+offset_bottom = 450.0
+texture = ExtResource("1_i8ll7")
+
+[node name="bg_2" type="TextureRect" parent="SlidingTiles"]
+offset_left = 800.0
+offset_top = -3.05176e-05
+offset_right = 1600.0
+offset_bottom = 450.0
+texture = ExtResource("1_i8ll7")

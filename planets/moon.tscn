@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://sdw8orlmwhre"]
+
+[ext_resource type="Texture2D" uid="uid://bk10jxo4wou3n" path="res://assets/sprites/moon.png" id="1_iwetd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nlm7h"]
+atlas = ExtResource("1_iwetd")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wweln"]
+atlas = ExtResource("1_iwetd")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3h1e6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nlm7h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wweln")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Moon" type="AnimatedSprite2D"]
+rotation = -1.5708
+sprite_frames = SubResource("SpriteFrames_3h1e6")
+autoplay = "default"

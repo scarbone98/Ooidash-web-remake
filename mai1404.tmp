@@ -1,0 +1,45 @@
+[gd_scene load_steps=9 format=3 uid="uid://cuwikb4ix2yc6"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_oeyiv"]
+[ext_resource type="Texture2D" uid="uid://dwhvjlvjaaak" path="res://assets/sprites/oldmanterry2.png" id="3_ahsxw"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="3_dgt8y"]
+[ext_resource type="Script" path="res://scripts/asteroid_spawner.gd" id="3_qytwm"]
+[ext_resource type="AudioStream" uid="uid://pyrbsurj8nni" path="res://assets/audio/ooidashtheme2.mp3" id="4_uh4h8"]
+[ext_resource type="PackedScene" uid="uid://bw1sy62k8y006" path="res://asteroid.tscn" id="5_m86gy"]
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="8_c8uio"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_evuvf"]
+
+[node name="MainScene" type="Node2D"]
+script = ExtResource("1_oeyiv")
+
+[node name="Player" type="Node2D" parent="." groups=["player"]]
+script = ExtResource("3_dgt8y")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+texture = ExtResource("3_ahsxw")
+
+[node name="Area2D" type="Area2D" parent="Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Area2D"]
+shape = SubResource("RectangleShape2D_evuvf")
+
+[node name="AsteroidSpawner" type="Node" parent="."]
+script = ExtResource("3_qytwm")
+
+[node name="Asteroid" parent="AsteroidSpawner" instance=ExtResource("5_m86gy")]
+position = Vector2(0, 128)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_uh4h8")
+autoplay = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("8_c8uio")
+
+[node name="ColumnManager" type="Node" parent="."]
+
+[connection signal="area_entered" from="Player/Area2D" to="Player" method="_on_area_2d_area_entered"]

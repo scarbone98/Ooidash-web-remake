@@ -1,0 +1,93 @@
+[gd_scene load_steps=19 format=3 uid="uid://cuwikb4ix2yc6"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_oeyiv"]
+[ext_resource type="Script" path="res://scripts/column_manager.gd" id="2_0uv0j"]
+[ext_resource type="PackedScene" uid="uid://byjkn4q5rpo5y" path="res://planets/earth.tscn" id="3_70jjp"]
+[ext_resource type="Texture2D" uid="uid://dwhvjlvjaaak" path="res://assets/sprites/oldmanterry2.png" id="3_ahsxw"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="3_dgt8y"]
+[ext_resource type="Script" path="res://scripts/asteroid_spawner.gd" id="3_qytwm"]
+[ext_resource type="PackedScene" uid="uid://3pugps1l3kwu" path="res://planets/jupiter.tscn" id="4_kiysl"]
+[ext_resource type="AudioStream" uid="uid://pyrbsurj8nni" path="res://assets/audio/ooidashtheme2.mp3" id="4_uh4h8"]
+[ext_resource type="PackedScene" uid="uid://sdw8orlmwhre" path="res://planets/moon.tscn" id="5_82y3k"]
+[ext_resource type="PackedScene" uid="uid://bw1sy62k8y006" path="res://asteroid.tscn" id="5_m86gy"]
+[ext_resource type="Texture2D" uid="uid://dkrygkvakxdp2" path="res://assets/sprites/oldmanterry1.png" id="5_u8ujp"]
+[ext_resource type="PackedScene" uid="uid://drtp3t5rvy2xe" path="res://planets/mars.tscn" id="6_j155k"]
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="8_c8uio"]
+[ext_resource type="Script" path="res://scripts/camera_2d.gd" id="8_ndxgp"]
+[ext_resource type="PackedScene" uid="uid://do6eseojjwb88" path="res://background.tscn" id="10_qff6e"]
+[ext_resource type="Script" path="res://scripts/score_ui.gd" id="11_sn4kp"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a7nqf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_u8ujp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ahsxw")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_evuvf"]
+
+[node name="MainScene" type="Node2D"]
+script = ExtResource("1_oeyiv")
+
+[node name="Background" parent="." instance=ExtResource("10_qff6e")]
+position = Vector2(212, -331)
+planets = Array[PackedScene]([ExtResource("3_70jjp"), ExtResource("4_kiysl"), ExtResource("5_82y3k"), ExtResource("6_j155k")])
+
+[node name="ColumnManager" type="Node2D" parent="."]
+script = ExtResource("2_0uv0j")
+
+[node name="Player" type="Node2D" parent="." groups=["player"]]
+script = ExtResource("3_dgt8y")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="Player"]
+sprite_frames = SubResource("SpriteFrames_a7nqf")
+autoplay = "default"
+frame = 1
+frame_progress = 0.0957216
+
+[node name="Area2D" type="Area2D" parent="Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Area2D"]
+shape = SubResource("RectangleShape2D_evuvf")
+
+[node name="AsteroidSpawner" type="Node2D" parent="."]
+script = ExtResource("3_qytwm")
+asteroid_scene = ExtResource("5_m86gy")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_uh4h8")
+autoplay = true
+parameters/looping = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+script = ExtResource("8_ndxgp")
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("8_c8uio")
+
+[node name="ScoreUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("11_sn4kp")
+
+[node name="Label" type="Label" parent="ScoreUI"]
+layout_mode = 1
+offset_left = -169.0
+offset_top = -312.0
+offset_right = -118.0
+offset_bottom = -289.0
+text = "HELLO"
+
+[connection signal="area_entered" from="Player/Area2D" to="Player" method="_on_area_2d_area_entered"]

@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://drtp3t5rvy2xe"]
+
+[ext_resource type="Texture2D" uid="uid://dy7hpaia2d6tj" path="res://assets/sprites/mars.png" id="1_jbejq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qn6rq"]
+atlas = ExtResource("1_jbejq")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ru3ag"]
+atlas = ExtResource("1_jbejq")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0btki"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qn6rq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ru3ag")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Mars" type="AnimatedSprite2D"]
+position = Vector2(561.001, 265.998)
+rotation = -1.5708
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_0btki")
+autoplay = "default"
+frame_progress = 0.36127

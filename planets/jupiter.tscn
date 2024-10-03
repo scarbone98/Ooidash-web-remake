@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://3pugps1l3kwu"]
+
+[ext_resource type="Texture2D" uid="uid://chhb3bku7f38y" path="res://assets/sprites/jupiter.png" id="1_3dyqp"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_607je"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_3dyqp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Jupiter" type="AnimatedSprite2D"]
+position = Vector2(530, 44.9981)
+rotation = -1.5708
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_607je")
+autoplay = "default"

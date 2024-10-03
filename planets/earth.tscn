@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://byjkn4q5rpo5y"]
+
+[ext_resource type="Texture2D" uid="uid://biesoc23g7ixl" path="res://assets/sprites/earth.png" id="1_11cj5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eraqj"]
+atlas = ExtResource("1_11cj5")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_amfa0"]
+atlas = ExtResource("1_11cj5")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6fmrj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eraqj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_amfa0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Earth" type="AnimatedSprite2D"]
+position = Vector2(294.001, 330.999)
+rotation = -1.5708
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_6fmrj")
+autoplay = "default"
+frame_progress = 0.243654

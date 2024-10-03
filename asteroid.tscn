@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://bw1sy62k8y006"]
+
+[ext_resource type="Texture2D" uid="uid://dgvt0w7grkeiq" path="res://assets/sprites/meteor.png" id="1_217mp"]
+[ext_resource type="Script" path="res://scripts/asteroid.gd" id="1_rka1q"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rd6ls"]
+radius = 31.7805
+
+[node name="Asteroid" type="Area2D"]
+script = ExtResource("1_rka1q")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_217mp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_rd6ls")
