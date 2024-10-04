@@ -20,12 +20,11 @@ config/icon="res://icon.svg"
 window/size/viewport_width=360
 window/size/viewport_height=640
 window/size/initial_position_type=0
-window/size/resizable=false
 window/size/always_on_top=true
 window/size/window_width_override=1080
 window/size/window_height_override=1920
-window/stretch/mode="viewport"
-window/stretch/scale_mode="integer"
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep_height"
 window/handheld/orientation=1
 
 [input]

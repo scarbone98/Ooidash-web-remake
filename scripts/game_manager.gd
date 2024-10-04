@@ -16,5 +16,4 @@ func _update_score() -> void:
 	player_score += 1
 
 func on_player_died():
-	pass
-	#get_tree().change_scene_to_file("res://main_menu.tscn")
+	get_tree().change_scene_to_file("res://main_menu.tscn")
