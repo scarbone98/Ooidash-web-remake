@@ -35,7 +35,7 @@ func _spawn_star() -> void:
 
 func _spawn_planet() -> void:
 	var initialized_planet_sprite = planets[planet_index].instantiate()
-	var planet_speed = get_random_int_in_range(10, 500)
+	var planet_speed = get_random_int_in_range(50, 250)
 	active_bg_elements.append(_spawn_bg_element(initialized_planet_sprite, planet_speed))
 	planet_index += (planet_index + 1) % planets.size()
 
@@ -52,7 +52,7 @@ func _spawn_stars():
 func _spawn_planets():
 	while true:
 		var spawn_timer = Timer.new()
-		spawn_timer.set_wait_time(5)
+		spawn_timer.set_wait_time(15)
 		add_child(spawn_timer)
 		spawn_timer.start()
 		await spawn_timer.timeout

@@ -11,18 +11,21 @@ config_version=5
 [application]
 
 config/name="Ooidash"
-run/main_scene="res://main_scene.tscn"
+run/main_scene="res://main_menu.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=720
-window/size/viewport_height=1280
+window/size/viewport_width=360
+window/size/viewport_height=640
 window/size/initial_position_type=0
 window/size/resizable=false
 window/size/always_on_top=true
-window/stretch/mode="canvas_items"
+window/size/window_width_override=1080
+window/size/window_height_override=1920
+window/stretch/mode="viewport"
+window/stretch/scale_mode="integer"
 window/handheld/orientation=1
 
 [input]
@@ -47,5 +50,7 @@ mouse_button_left={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
