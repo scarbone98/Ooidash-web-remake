@@ -16,4 +16,9 @@ func _update_score() -> void:
 	player_score += 1
 
 func on_player_died():
+	if OS.has_feature("JavaScript"):
+		var js_obj = JavaScriptObject.new.call()
+		js_obj.call("eval", "parent.postMessage({ score: " + str(player_score) + " }, '*')")
+	else:
+		print("Not running in HTML5, cannot execute JavaScript.")
 	get_tree().change_scene_to_file("res://main_menu.tscn")

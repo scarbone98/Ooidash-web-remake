@@ -7,7 +7,6 @@
 [ext_resource type="Script" path="res://scripts/player.gd" id="3_dgt8y"]
 [ext_resource type="Script" path="res://scripts/asteroid_spawner.gd" id="3_qytwm"]
 [ext_resource type="PackedScene" uid="uid://3pugps1l3kwu" path="res://planets/jupiter.tscn" id="4_kiysl"]
-[ext_resource type="AudioStream" uid="uid://pyrbsurj8nni" path="res://assets/audio/ooidashtheme2.mp3" id="4_uh4h8"]
 [ext_resource type="PackedScene" uid="uid://sdw8orlmwhre" path="res://planets/moon.tscn" id="5_82y3k"]
 [ext_resource type="PackedScene" uid="uid://bw1sy62k8y006" path="res://asteroid.tscn" id="5_m86gy"]
 [ext_resource type="Texture2D" uid="uid://dkrygkvakxdp2" path="res://assets/sprites/oldmanterry1.png" id="5_u8ujp"]
@@ -16,6 +15,7 @@
 [ext_resource type="Script" path="res://scripts/camera_2d.gd" id="8_ndxgp"]
 [ext_resource type="PackedScene" uid="uid://do6eseojjwb88" path="res://background.tscn" id="10_qff6e"]
 [ext_resource type="Script" path="res://scripts/score_ui.gd" id="11_sn4kp"]
+[ext_resource type="AudioStream" uid="uid://dd56orsrdthxu" path="res://assets/audio/ooidashtheme2.ogg" id="13_p1k42"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_a7nqf"]
 animations = [{
@@ -62,7 +62,7 @@ script = ExtResource("3_qytwm")
 asteroid_scene = ExtResource("5_m86gy")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("4_uh4h8")
+stream = ExtResource("13_p1k42")
 autoplay = true
 parameters/looping = true
 
