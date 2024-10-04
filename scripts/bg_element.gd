@@ -18,4 +18,4 @@ func _process(delta: float) -> void:
 	
 	# Check if the asteroid is outside the viewport
 	if position.y < auto_destroy_height:  # Adjust the threshold if needed based on the size of your asteroid
-		queue_free()  # Remove the asteroid from the scene
+		call_deferred("queue_free")  # Remove the asteroid from the scene

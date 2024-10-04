@@ -9,6 +9,9 @@ var camera: Camera2D
 var active_bg_elements: Array[Node2D] = []
 var planet_index: int = 0
 
+var star_timer: Timer
+var planet_timer: Timer
+
 func get_random_int_in_range(min: int, max: int) -> int:
 	return randi() % (max - min + 1) + min
 
@@ -39,31 +42,22 @@ func _spawn_planet() -> void:
 	active_bg_elements.append(_spawn_bg_element(initialized_planet_sprite, planet_speed))
 	planet_index += (planet_index + 1) % planets.size()
 
-func _spawn_stars():
-	while true:
-		var spawn_timer = Timer.new()
-		spawn_timer.set_wait_time(0.3)
-		add_child(spawn_timer)
-		spawn_timer.start()
-		await spawn_timer.timeout
-		spawn_timer.queue_free()
-		_spawn_star()
-
-func _spawn_planets():
-	while true:
-		var spawn_timer = Timer.new()
-		spawn_timer.set_wait_time(15)
-		add_child(spawn_timer)
-		spawn_timer.start()
-		await spawn_timer.timeout
-		spawn_timer.queue_free()
-		_spawn_planet()
-
 func _ready() -> void:
 	camera = get_viewport().get_camera_2d()  # Get the currently active Camera2D
 	if camera != null:
-		_spawn_stars()
-		_spawn_planets()
+		star_timer = Timer.new()
+		planet_timer = Timer.new()
+		add_child(star_timer)
+		add_child(planet_timer)
+
+		star_timer.set_wait_time(0.3)
+		planet_timer.set_wait_time(15)
+		
+		star_timer.start()
+		planet_timer.start()
+
+		star_timer.timeout.connect(_spawn_star)
+		planet_timer.timeout.connect(_spawn_planet)
 	
 
 func _process(delta: float) -> void:
