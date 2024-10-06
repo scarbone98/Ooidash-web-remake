@@ -63,6 +63,7 @@ asteroid_scene = ExtResource("5_m86gy")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." groups=["audio"]]
 stream = ExtResource("13_p1k42")
+volume_db = -15.0
 autoplay = true
 parameters/looping = true
 
