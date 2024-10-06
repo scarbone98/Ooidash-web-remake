@@ -50,7 +50,7 @@ func _ready() -> void:
 		add_child(star_timer)
 		add_child(planet_timer)
 
-		star_timer.set_wait_time(0.3)
+		star_timer.set_wait_time(1)
 		planet_timer.set_wait_time(15)
 		
 		star_timer.start()
