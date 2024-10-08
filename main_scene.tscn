@@ -65,6 +65,7 @@ asteroid_scene = ExtResource("5_m86gy")
 stream = ExtResource("13_p1k42")
 volume_db = -15.0
 autoplay = true
+playback_type = 2
 parameters/looping = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
