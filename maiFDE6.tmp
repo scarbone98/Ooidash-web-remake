@@ -1,0 +1,50 @@
+[gd_scene load_steps=4 format=3 uid="uid://cahul4mfylk0b"]
+
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_6q5pw"]
+[ext_resource type="PackedScene" uid="uid://do6eseojjwb88" path="res://background.tscn" id="1_xwvit"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3gjrg"]
+font_size = 45
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6q5pw")
+
+[node name="Background" parent="." instance=ExtResource("1_xwvit")]
+position = Vector2(408, -17)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -47.0
+offset_top = -33.0
+offset_right = 49.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Ooidash"
+label_settings = SubResource("LabelSettings_3gjrg")
+
+[node name="StartButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Start Game"
+
+[node name="SettingsButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Settings"
+
+[connection signal="button_down" from="VBoxContainer/StartButton" to="." method="_on_start_button_button_down"]
