@@ -73,21 +73,23 @@ script = ExtResource("8_ndxgp")
 [node name="GameManager" type="Node" parent="."]
 script = ExtResource("8_c8uio")
 
-[node name="ScoreUI" type="Control" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ScoreUI" type="Control" parent="CanvasLayer"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
 script = ExtResource("11_sn4kp")
 
-[node name="Label" type="Label" parent="ScoreUI"]
-layout_mode = 1
-offset_left = -169.0
-offset_top = -312.0
-offset_right = -118.0
-offset_bottom = -289.0
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ScoreUI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="CanvasLayer/ScoreUI/VBoxContainer"]
+layout_mode = 2
 text = "HELLO"
+
+[node name="FPS" type="Label" parent="CanvasLayer/ScoreUI/VBoxContainer"]
+layout_mode = 2
 
 [connection signal="area_entered" from="Player/Area2D" to="Player" method="_on_area_2d_area_entered"]
