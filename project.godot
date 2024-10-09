@@ -30,7 +30,6 @@ window/size/window_height_override=1920
 window/stretch/mode="canvas_items"
 window/stretch/aspect="keep_height"
 window/handheld/orientation=1
-window/vsync/vsync_mode=0
 
 [input]
 
