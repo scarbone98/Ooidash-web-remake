@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://b3ydba2yrwi8x"]
+
+[ext_resource type="Script" path="res://items/item_data.gd" id="1_a63ox"]
+[ext_resource type="PackedScene" uid="uid://bt5xr3u1xynuc" path="res://items/gem.tscn" id="1_nlg06"]
+
+[resource]
+script = ExtResource("1_a63ox")
+item_scene = ExtResource("1_nlg06")
+spawn_probability = 0.25

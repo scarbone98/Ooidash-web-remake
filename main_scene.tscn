@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cuwikb4ix2yc6"]
+[gd_scene load_steps=22 format=3 uid="uid://cuwikb4ix2yc6"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_oeyiv"]
 [ext_resource type="Script" path="res://scripts/column_manager.gd" id="2_0uv0j"]
@@ -16,6 +16,9 @@
 [ext_resource type="PackedScene" uid="uid://do6eseojjwb88" path="res://background.tscn" id="10_qff6e"]
 [ext_resource type="Script" path="res://scripts/score_ui.gd" id="11_sn4kp"]
 [ext_resource type="AudioStream" uid="uid://dd56orsrdthxu" path="res://assets/audio/ooidashtheme2.ogg" id="13_p1k42"]
+[ext_resource type="Script" path="res://items/item_data.gd" id="14_gua6f"]
+[ext_resource type="Resource" uid="uid://b3ydba2yrwi8x" path="res://items/gem.tres" id="15_tqqae"]
+[ext_resource type="Script" path="res://scripts/item_spawner.gd" id="17_5yp1b"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_a7nqf"]
 animations = [{
@@ -61,6 +64,10 @@ shape = SubResource("RectangleShape2D_evuvf")
 script = ExtResource("3_qytwm")
 asteroid_scene = ExtResource("5_m86gy")
 
+[node name="ItemSpawner" type="Node2D" parent="."]
+script = ExtResource("17_5yp1b")
+items = Array[ExtResource("14_gua6f")]([ExtResource("15_tqqae")])
+
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="." groups=["audio"]]
 stream = ExtResource("13_p1k42")
 volume_db = -15.0
@@ -77,13 +84,20 @@ script = ExtResource("8_c8uio")
 
 [node name="ScoreUI" type="Control" parent="CanvasLayer"]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("11_sn4kp")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ScoreUI"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 2
+offset_left = 267.0
+offset_right = 360.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Label" type="Label" parent="CanvasLayer/ScoreUI/VBoxContainer"]
 layout_mode = 2
@@ -93,3 +107,4 @@ text = "HELLO"
 layout_mode = 2
 
 [connection signal="area_entered" from="Player/Area2D" to="Player" method="_on_area_2d_area_entered"]
+[connection signal="asteroids_spawned" from="AsteroidSpawner" to="ItemSpawner" method="_on_asteroid_spawner_asteroids_spawned"]

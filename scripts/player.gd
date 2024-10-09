@@ -25,7 +25,11 @@ func update_position():
 	position.y = -((get_viewport_rect().size.y / camera.zoom.y) / 2) + 75
 	
 func _on_area_2d_area_entered(area: Area2D) -> void:
-	emit_signal("player_died")
+	if area.is_in_group("enemy"):
+		emit_signal("player_died")
+	elif area.is_in_group("item"):
+		area.call_deferred("queue_free")
+		game_manager.player_score += 10
 	
 func _process(delta: float) -> void:
 	handle_movement()

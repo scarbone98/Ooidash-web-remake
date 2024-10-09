@@ -11,6 +11,8 @@ var camera: Camera2D
 
 var last_asteroid: Node2D
 
+signal asteroids_spawned(asteroids: Array, speed: float)
+
 func _ready() -> void:
 	camera = get_node('/root/MainScene/Camera2D')
 	_spawn_asteroid()
@@ -29,14 +31,13 @@ func get_random_int_in_range(min: int, max: int) -> int:
 	return randi() % (max - min + 1) + min
 
 func _spawn_asteroid():
-	var spawn_positions = column_manager.column_positions.duplicate()
+	var spawn_positions: Array = column_manager.column_positions.duplicate()
+	
 	for i in range(0, get_random_int_in_range(1,column_manager.column_positions.size()-1)):
 		var index_to_spawn = get_random_int_in_range(0, spawn_positions.size()-1)
 		
-		var spawn_position = column_manager.get_column_position(index_to_spawn)
+		var spawn_position = spawn_positions.pop_at(index_to_spawn)
 		spawn_position.y = (get_viewport_rect().size.y / camera.zoom.y) / 2 + 50  # Start at the bottom of the screen
-		
-		spawn_positions.remove_at(index_to_spawn)
 		
 		# Instantiate a new asteroid from the PackedScene
 		var asteroid = asteroid_scene.instantiate()
@@ -46,6 +47,13 @@ func _spawn_asteroid():
 		add_child(asteroid)
 		
 		last_asteroid = asteroid
+	
+	var new_spawn_pos: Array = []
+	for spawn_pos in spawn_positions:
+		spawn_pos.y = (get_viewport_rect().size.y / camera.zoom.y) / 2 + 50  # Start at the bottom of the screen
+		new_spawn_pos.append(spawn_pos)
+	
+	asteroids_spawned.emit(new_spawn_pos, asteroid_speed)
 	
 func _increase_speed():
 	asteroid_speed += 10
