@@ -25,8 +25,9 @@ body {
 
 #canvas {
 	display: block;
-	width: 100vw;
+	width: min(100vw, calc(100vh * 0.5625));
 	height: 100vh;
+	margin: 0 auto;
 }
 
 #canvas:focus {
@@ -89,7 +90,7 @@ body {
 
 	</head>
 	<body>
-		<canvas id="canvas">
+		<canvas id="canvas" width="360" height="640">
 			Your browser does not support the canvas tag.
 		</canvas>
 
@@ -105,7 +106,7 @@ body {
 
 		<script src="Ooidash.js"></script>
 		<script>
-const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"ensureCrossOriginIsolationHeaders":true,"executable":"Ooidash","experimentalVK":false,"fileSizes":{"Ooidash.pck":5892592,"Ooidash.wasm":35376909},"focusCanvas":true,"gdextensionLibs":[],"serviceWorker":"Ooidash.service.worker.js"};
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":0,"ensureCrossOriginIsolationHeaders":true,"executable":"Ooidash","experimentalVK":false,"fileSizes":{"Ooidash.pck":5892592,"Ooidash.wasm":35376909},"focusCanvas":true,"gdextensionLibs":[],"serviceWorker":"Ooidash.service.worker.js"};
 const GODOT_THREADS_ENABLED = false;
 const engine = new Engine(GODOT_CONFIG);
 
