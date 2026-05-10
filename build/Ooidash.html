@@ -21,13 +21,17 @@ body {
 	background-color: black;
 	overflow: hidden;
 	touch-action: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 #canvas {
 	display: block;
 	width: min(100vw, calc(100vh * 0.5625));
-	height: 100vh;
-	margin: 0 auto;
+	height: min(100vh, calc(100vw / 0.5625));
+	image-rendering: crisp-edges;
+	image-rendering: pixelated;
 }
 
 #canvas:focus {
@@ -106,7 +110,7 @@ body {
 
 		<script src="Ooidash.js"></script>
 		<script>
-const GODOT_CONFIG = {"args":[],"canvasResizePolicy":0,"ensureCrossOriginIsolationHeaders":true,"executable":"Ooidash","experimentalVK":false,"fileSizes":{"Ooidash.pck":5892592,"Ooidash.wasm":35376909},"focusCanvas":true,"gdextensionLibs":[],"serviceWorker":"Ooidash.service.worker.js"};
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"ensureCrossOriginIsolationHeaders":true,"executable":"Ooidash","experimentalVK":false,"fileSizes":{"Ooidash.pck":5892592,"Ooidash.wasm":35376909},"focusCanvas":true,"gdextensionLibs":[],"serviceWorker":"Ooidash.service.worker.js"};
 const GODOT_THREADS_ENABLED = false;
 const engine = new Engine(GODOT_CONFIG);
 
