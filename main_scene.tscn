@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cuwikb4ix2yc6"]
+[gd_scene load_steps=24 format=3 uid="uid://cuwikb4ix2yc6"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_oeyiv"]
 [ext_resource type="Script" path="res://scripts/column_manager.gd" id="2_0uv0j"]
@@ -19,6 +19,8 @@
 [ext_resource type="Script" path="res://items/item_data.gd" id="14_gua6f"]
 [ext_resource type="Resource" uid="uid://b3ydba2yrwi8x" path="res://items/gem.tres" id="15_tqqae"]
 [ext_resource type="Script" path="res://scripts/item_spawner.gd" id="17_5yp1b"]
+[ext_resource type="Script" path="res://scripts/menu_star_background.gd" id="18_5hmqm"]
+[ext_resource type="Texture2D" uid="uid://dq6dmi1p1k8ks" path="res://assets/sprites/test_stars.png" id="19_hx0t2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_a7nqf"]
 animations = [{
@@ -38,6 +40,20 @@ animations = [{
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource("1_oeyiv")
+
+[node name="BackgroundLayer" type="CanvasLayer" parent="."]
+layer = -100
+
+[node name="StarBackground" type="Control" parent="BackgroundLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("18_5hmqm")
+texture = ExtResource("19_hx0t2")
 
 [node name="Background" parent="." instance=ExtResource("10_qff6e")]
 position = Vector2(212, -331)

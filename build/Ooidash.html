@@ -14,6 +14,7 @@ html, body, #canvas {
 html, body {
 	width: 100%;
 	height: 100%;
+	min-height: 100%;
 }
 
 body {
@@ -23,13 +24,13 @@ body {
 	touch-action: none;
 	display: flex;
 	justify-content: center;
-	align-items: center;
+	align-items: stretch;
 }
 
 #canvas {
 	display: block;
-	width: 100vw;
-	height: 100vh;
+	width: 100%;
+	height: 100%;
 	image-rendering: crisp-edges;
 	image-rendering: pixelated;
 }
@@ -64,6 +65,20 @@ body {
 	margin: auto;
 }
 
+#status-splash.show-image--false {
+	display: none;
+}
+
+#status-splash.fullsize--true {
+	height: 100%;
+	width: 100%;
+	object-fit: contain;
+}
+
+#status-splash.use-filter--false {
+	image-rendering: pixelated;
+}
+
 #status-progress, #status-notice {
 	display: none;
 }
@@ -94,7 +109,7 @@ body {
 
 	</head>
 	<body>
-		<canvas id="canvas" width="360" height="640">
+		<canvas id="canvas">
 			Your browser does not support the canvas tag.
 		</canvas>
 
@@ -103,14 +118,14 @@ body {
 		</noscript>
 
 		<div id="status">
-			<img id="status-splash" src="Ooidash.png" alt="">
+			<img id="status-splash" class="show-image--true fullsize--true use-filter--true" src="Ooidash.png" alt="">
 			<progress id="status-progress"></progress>
 			<div id="status-notice"></div>
 		</div>
 
 		<script src="Ooidash.js"></script>
 		<script>
-const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"ensureCrossOriginIsolationHeaders":true,"executable":"Ooidash","experimentalVK":false,"fileSizes":{"Ooidash.pck":5892592,"Ooidash.wasm":35376909},"focusCanvas":true,"gdextensionLibs":[],"serviceWorker":"Ooidash.service.worker.js"};
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"Ooidash","experimentalVK":false,"fileSizes":{"Ooidash.pck":5891636,"Ooidash.wasm":37695054},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4,"serviceWorker":"Ooidash.service.worker.js"};
 const GODOT_THREADS_ENABLED = false;
 const engine = new Engine(GODOT_CONFIG);
 
@@ -155,7 +170,7 @@ const engine = new Engine(GODOT_CONFIG);
 		} else if (typeof err === 'string') {
 			setStatusNotice(err);
 		} else {
-			setStatusNotice('An unknown error occured');
+			setStatusNotice('An unknown error occurred.');
 		}
 		setStatusMode('notice');
 		initializing = false;
@@ -167,9 +182,15 @@ const engine = new Engine(GODOT_CONFIG);
 
 	if (missing.length !== 0) {
 		if (GODOT_CONFIG['serviceWorker'] && GODOT_CONFIG['ensureCrossOriginIsolationHeaders'] && 'serviceWorker' in navigator) {
+			let serviceWorkerRegistrationPromise;
+			try {
+				serviceWorkerRegistrationPromise = navigator.serviceWorker.getRegistration();
+			} catch (err) {
+				serviceWorkerRegistrationPromise = Promise.reject(new Error('Service worker registration failed.'));
+			}
 			// There's a chance that installing the service worker would fix the issue
 			Promise.race([
-				navigator.serviceWorker.getRegistration().then((registration) => {
+				serviceWorkerRegistrationPromise.then((registration) => {
 					if (registration != null) {
 						return Promise.reject(new Error('Service worker already exists.'));
 					}
@@ -179,10 +200,11 @@ const engine = new Engine(GODOT_CONFIG);
 				new Promise((resolve) => {
 					setTimeout(() => resolve(), 2000);
 				}),
-			]).catch((err) => {
-				console.error('Error while registering service worker:', err);
-			}).then(() => {
+			]).then(() => {
+				// Reload if there was no error.
 				window.location.reload();
+			}).catch((err) => {
+				console.error('Error while registering service worker:', err);
 			});
 		} else {
 			// Display the message as usual
