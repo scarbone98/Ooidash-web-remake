@@ -1,7 +1,7 @@
 extends Control
 
 @export var texture: Texture2D
-@export var scroll_speed: Vector2 = Vector2(0, 50)
+@export var scroll_speed: Vector2 = Vector2(0, -50)
 
 var offset: Vector2 = Vector2.ZERO
 
