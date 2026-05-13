@@ -52,8 +52,18 @@ label_settings = SubResource("LabelSettings_3gjrg")
 layout_mode = 2
 text = "Start Game"
 
-[node name="SettingsButton" type="Button" parent="VBoxContainer"]
+[node name="MusicRow" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
-text = "Settings"
+theme_override_constants/separation = 20
+
+[node name="MusicLabel" type="Label" parent="VBoxContainer/MusicRow"]
+layout_mode = 2
+text = "Music"
+
+[node name="MusicToggle" type="CheckButton" parent="VBoxContainer/MusicRow"]
+layout_mode = 2
+size_flags_horizontal = 10
+button_pressed = true
 
 [connection signal="button_down" from="VBoxContainer/StartButton" to="." method="_on_start_button_button_down"]
+[connection signal="toggled" from="VBoxContainer/MusicRow/MusicToggle" to="." method="_on_music_toggle_toggled"]
