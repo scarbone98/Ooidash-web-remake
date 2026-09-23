@@ -30,7 +30,31 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 	elif area.is_in_group("item"):
 		area.call_deferred("queue_free")
 		game_manager.player_score += 10
-	
+		_show_pickup(area.global_position)
+
+func _show_pickup(at: Vector2) -> void:
+	var label := Label.new()
+	label.text = "+10"
+	label.add_theme_font_override("font", ScareathonTheme.BODY_FONT)
+	label.add_theme_font_size_override("font_size", 28)
+	label.add_theme_color_override("font_color", ScareathonTheme.AMBER)
+	label.add_theme_color_override("font_outline_color", ScareathonTheme.SHADOW)
+	label.add_theme_constant_override("outline_size", 6)
+	label.z_index = 10
+	get_parent().add_child(label)
+	label.global_position = at - Vector2(20, 20)
+
+	var tween := label.create_tween().set_parallel()
+	tween.tween_property(label, "position:y", label.position.y + 60, 0.6).set_ease(Tween.EASE_OUT)
+	tween.tween_property(label, "modulate:a", 0.0, 0.6).set_delay(0.2)
+	tween.chain().tween_callback(label.queue_free)
+
+	var sprite: Node2D = $Sprite2D
+	var base_scale := Vector2(2, 2)
+	var pop := create_tween()
+	pop.tween_property(sprite, "scale", base_scale * 1.2, 0.06)
+	pop.tween_property(sprite, "scale", base_scale, 0.1)
+
 func _process(delta: float) -> void:
 	handle_movement()
 
@@ -46,9 +70,9 @@ func handle_movement() -> void:
 	# Check for taps (screen touches)
 	if Input.is_action_just_pressed("mouse_button_left"):
 		var click_position = get_global_mouse_position()
-		
-		# Assuming your player is centered horizontally
-		if click_position.x < 0:
+
+		# Tap on either side of the player to step that way
+		if click_position.x < global_position.x:
 			direction.x -= 1
 		else:
 			direction.x += 1

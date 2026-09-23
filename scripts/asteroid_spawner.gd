@@ -3,6 +3,7 @@ extends Node2D
 @export var asteroid_scene: PackedScene  # Drag your Asteroid.tscn here in the inspector
 @export var spawn_interval: float = 1  # Time interval between spawns
 @export var asteroid_speed: float = 200  # Speed at which the asteroids fall
+@export var max_asteroid_speed: float = 1200  # Ramp stops here so late runs stay dodgeable
 
 var spawn_timer: Timer
 @onready var column_manager = get_node("/root/MainScene/ColumnManager")
@@ -56,4 +57,4 @@ func _spawn_asteroid():
 	asteroids_spawned.emit(new_spawn_pos, asteroid_speed)
 	
 func _increase_speed():
-	asteroid_speed += 10
+	asteroid_speed = min(asteroid_speed + 10, max_asteroid_speed)

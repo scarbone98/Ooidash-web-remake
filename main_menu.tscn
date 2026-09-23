@@ -47,14 +47,21 @@ alignment = 1
 layout_mode = 2
 text = "Ooidash"
 label_settings = SubResource("LabelSettings_3gjrg")
+horizontal_alignment = 1
 
 [node name="StartButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Start Game"
 
+[node name="BestLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"HintLabel"
+horizontal_alignment = 1
+
 [node name="MusicRow" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 12
+alignment = 1
 
 [node name="MusicLabel" type="Label" parent="VBoxContainer/MusicRow"]
 layout_mode = 2
@@ -62,7 +69,6 @@ text = "Music"
 
 [node name="MusicToggle" type="CheckButton" parent="VBoxContainer/MusicRow"]
 layout_mode = 2
-size_flags_horizontal = 10
 button_pressed = true
 
 [connection signal="button_down" from="VBoxContainer/StartButton" to="." method="_on_start_button_button_down"]

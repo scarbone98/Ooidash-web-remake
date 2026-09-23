@@ -15,18 +15,21 @@ var planet_timer: Timer
 func get_random_int_in_range(min: int, max: int) -> int:
 	return randi() % (max - min + 1) + min
 
+func _visible_half_size() -> Vector2:
+	return get_viewport_rect().size / camera.zoom / 2
+
 func _get_random_spawn_position() -> Vector2:
-	var position = Vector2()
-	position.x = (get_viewport_rect().size.y / camera.zoom.y) + 150
-	position.y = get_random_int_in_range(-(get_viewport_rect().size.x / camera.zoom.x), (get_viewport_rect().size.x / camera.zoom.x))
-	return position
+	# Spawn just past the right edge of the view, at a random height
+	var center = to_local(camera.get_screen_center_position())
+	var half = _visible_half_size()
+	return Vector2(center.x + half.x + 150, center.y + randf_range(-half.y, half.y))
 
 func _spawn_bg_element(sprite: AnimatedSprite2D, speed: float) -> Node2D:
 	var bg_item = bg_element.instantiate()
 	bg_item.sprite = sprite
 	bg_item.move_speed = speed
 	bg_item.position = _get_random_spawn_position()
-	bg_item.auto_destroy_height = -(get_viewport_rect().size.y / camera.zoom.y) / 2 - 150
+	bg_item.auto_destroy_x = to_local(camera.get_screen_center_position()).x - _visible_half_size().x - 150
 	add_child(bg_item)
 	return bg_item
 	
@@ -40,7 +43,7 @@ func _spawn_planet() -> void:
 	var initialized_planet_sprite = planets[planet_index].instantiate()
 	var planet_speed = get_random_int_in_range(50, 250)
 	active_bg_elements.append(_spawn_bg_element(initialized_planet_sprite, planet_speed))
-	planet_index += (planet_index + 1) % planets.size()
+	planet_index = (planet_index + 1) % planets.size()
 
 func _ready() -> void:
 	camera = get_viewport().get_camera_2d()  # Get the currently active Camera2D

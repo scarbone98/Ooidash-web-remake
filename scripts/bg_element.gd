@@ -1,7 +1,7 @@
 extends Node2D
 
 var move_speed: int = 100
-var auto_destroy_height: float
+var auto_destroy_x: float
 
 var sprite: AnimatedSprite2D
 
@@ -15,7 +15,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	position.x -= delta * move_speed
-	
-	# Check if the asteroid is outside the viewport
-	if position.y < auto_destroy_height:  # Adjust the threshold if needed based on the size of your asteroid
-		call_deferred("queue_free")  # Remove the asteroid from the scene
+
+	# Elements scroll right-to-left, so free them once they pass the left edge
+	if position.x < auto_destroy_x:
+		call_deferred("queue_free")

@@ -37,6 +37,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_evuvf"]
+size = Vector2(38, 28)
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource("1_oeyiv")
@@ -66,6 +67,7 @@ script = ExtResource("2_0uv0j")
 script = ExtResource("3_dgt8y")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="Player"]
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_a7nqf")
 autoplay = "default"
 frame = 1
@@ -108,19 +110,23 @@ grow_vertical = 2
 script = ExtResource("11_sn4kp")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ScoreUI"]
-layout_mode = 2
-offset_left = 267.0
-offset_right = 360.0
-offset_bottom = 50.0
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -24.0
+offset_bottom = -24.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
+mouse_filter = 2
 
 [node name="Label" type="Label" parent="CanvasLayer/ScoreUI/VBoxContainer"]
 layout_mode = 2
-text = "HELLO"
+text = "0"
+horizontal_alignment = 1
 
-[node name="FPS" type="Label" parent="CanvasLayer/ScoreUI/VBoxContainer"]
-layout_mode = 2
 
 [connection signal="area_entered" from="Player/Area2D" to="Player" method="_on_area_2d_area_entered"]
 [connection signal="asteroids_spawned" from="AsteroidSpawner" to="ItemSpawner" method="_on_asteroid_spawner_asteroids_spawned"]
