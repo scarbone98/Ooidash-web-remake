@@ -1,14 +1,13 @@
-[gd_scene load_steps=24 format=3 uid="uid://cuwikb4ix2yc6"]
+[gd_scene load_steps=23 format=3 uid="uid://cuwikb4ix2yc6"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_oeyiv"]
 [ext_resource type="Script" path="res://scripts/column_manager.gd" id="2_0uv0j"]
 [ext_resource type="PackedScene" uid="uid://byjkn4q5rpo5y" path="res://planets/earth.tscn" id="3_70jjp"]
 [ext_resource type="Texture2D" uid="uid://dwhvjlvjaaak" path="res://assets/sprites/oldmanterry2.png" id="3_ahsxw"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="3_dgt8y"]
-[ext_resource type="Script" path="res://scripts/asteroid_spawner.gd" id="3_qytwm"]
+[ext_resource type="Script" path="res://scripts/hazard_spawner.gd" id="3_qytwm"]
 [ext_resource type="PackedScene" uid="uid://3pugps1l3kwu" path="res://planets/jupiter.tscn" id="4_kiysl"]
 [ext_resource type="PackedScene" uid="uid://sdw8orlmwhre" path="res://planets/moon.tscn" id="5_82y3k"]
-[ext_resource type="PackedScene" uid="uid://bw1sy62k8y006" path="res://asteroid.tscn" id="5_m86gy"]
 [ext_resource type="Texture2D" uid="uid://dkrygkvakxdp2" path="res://assets/sprites/oldmanterry1.png" id="5_u8ujp"]
 [ext_resource type="PackedScene" uid="uid://drtp3t5rvy2xe" path="res://planets/mars.tscn" id="6_j155k"]
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="8_c8uio"]
@@ -37,7 +36,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_evuvf"]
-size = Vector2(38, 28)
+size = Vector2(30, 22)
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource("1_oeyiv")
@@ -78,9 +77,8 @@ frame_progress = 0.0957216
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Area2D"]
 shape = SubResource("RectangleShape2D_evuvf")
 
-[node name="AsteroidSpawner" type="Node2D" parent="."]
+[node name="HazardSpawner" type="Node2D" parent="."]
 script = ExtResource("3_qytwm")
-asteroid_scene = ExtResource("5_m86gy")
 
 [node name="ItemSpawner" type="Node2D" parent="."]
 script = ExtResource("17_5yp1b")
@@ -129,4 +127,4 @@ horizontal_alignment = 1
 
 
 [connection signal="area_entered" from="Player/Area2D" to="Player" method="_on_area_2d_area_entered"]
-[connection signal="asteroids_spawned" from="AsteroidSpawner" to="ItemSpawner" method="_on_asteroid_spawner_asteroids_spawned"]
+[connection signal="row_spawned" from="HazardSpawner" to="ItemSpawner" method="_on_row_spawned"]

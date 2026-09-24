@@ -21,7 +21,7 @@ func _ready() -> void:
 	_flash.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_root.add_child(_flash)
 
-func show_results(score: int, best: int, is_new_best: bool, camera: Camera2D) -> void:
+func show_results(score: int, best: int, is_new_best: bool, depth: int, zone_name: String, camera: Camera2D) -> void:
 	visible = true
 	var tween := create_tween()
 	tween.tween_property(_flash, "color:a", 0.55, 0.06)
@@ -32,9 +32,9 @@ func show_results(score: int, best: int, is_new_best: bool, camera: Camera2D) ->
 			var strength := 10.0 * (1.0 - i / 6.0)
 			shake.tween_property(camera, "offset", Vector2(randf_range(-strength, strength), randf_range(-strength, strength)), 0.04)
 		shake.tween_property(camera, "offset", Vector2.ZERO, 0.04)
-	tween.tween_callback(_build_panel.bind(score, best, is_new_best))
+	tween.tween_callback(_build_panel.bind(score, best, is_new_best, depth, zone_name))
 
-func _build_panel(score: int, best: int, is_new_best: bool) -> void:
+func _build_panel(score: int, best: int, is_new_best: bool, depth: int, zone_name: String) -> void:
 	var center := CenterContainer.new()
 	center.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_root.add_child(center)
@@ -48,6 +48,7 @@ func _build_panel(score: int, best: int, is_new_best: bool) -> void:
 	panel.add_child(box)
 
 	box.add_child(_label("Game Over", "TitleLabel"))
+	box.add_child(_label("Fell %d m into %s" % [depth, zone_name], "HintLabel"))
 	box.add_child(_label("Score  %d" % score, "ScoreLabel"))
 	box.add_child(_label("New best!" if is_new_best else "Best  %d" % best, "HintLabel"))
 

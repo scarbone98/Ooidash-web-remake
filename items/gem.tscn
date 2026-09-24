@@ -52,4 +52,3 @@ shape = SubResource("CircleShape2D_1ryv6")
 sprite_frames = SubResource("SpriteFrames_25qid")
 autoplay = "default"
 
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
