@@ -4,15 +4,16 @@ extends Item
 # A floating power pickup. The icon sits on a pulsing glow so it reads as
 # different from a gem at a glance.
 const ICONS := {
-	"shield": {"texture": preload("res://assets/sprites/shield.png"), "scale": 0.45},
+	"shield": {"texture": preload("res://assets/sprites/shield_icon.png"), "scale": 1.5, "frames": 6, "fps": 8.0},
 	"katana": {"texture": preload("res://assets/sprites/katana.png"), "scale": 2.0},
-	"slow": {"texture": preload("res://assets/sprites/invinc.png"), "scale": 1.0, "frames": 4},
+	"slow": {"texture": preload("res://assets/sprites/invinc.png"), "scale": 1.0, "frames": 4, "fps": 8.0},
 	"magnet": {"texture": preload("res://assets/sprites/magnet.png"), "scale": 2.2},
 }
 const NAMES := {"shield": "Shield!", "katana": "Katana!", "slow": "Slow-mo!", "magnet": "Magnet!"}
 
 var power := "shield"
 var _glow := 0.0
+var _icon: Sprite2D
 
 func _ready() -> void:
 	add_to_group("item")
@@ -20,7 +21,8 @@ func _ready() -> void:
 	shape.shape = CircleShape2D.new()
 	shape.shape.radius = 18.0
 	add_child(shape)
-	add_child(icon_sprite(power))
+	_icon = icon_sprite(power)
+	add_child(_icon)
 
 static func icon_sprite(power_name: String) -> Sprite2D:
 	var icon: Dictionary = ICONS[power_name]
@@ -34,6 +36,9 @@ static func icon_sprite(power_name: String) -> Sprite2D:
 func _process(delta: float) -> void:
 	super(delta)
 	_glow += delta
+	var icon: Dictionary = ICONS[power]
+	if icon.has("frames"):
+		_icon.frame = int(_glow * icon.fps) % icon.frames
 	queue_redraw()
 
 func _draw() -> void:

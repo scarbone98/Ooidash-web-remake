@@ -2,7 +2,8 @@ extends Node2D
 
 signal player_died
 
-const SHIELD_TEXTURE := preload("res://assets/sprites/shield.png")
+const SHIELD_TEXTURE := preload("res://assets/sprites/shield_bubble.png")
+const SHIELD_FRAMES := 8
 const KATANA_TEXTURE := preload("res://assets/sprites/katana.png")
 const SLASH_TEXTURE := preload("res://assets/sprites/slash.png")
 
@@ -42,6 +43,8 @@ func _ready() -> void:
 
 	_shield_sprite = Sprite2D.new()
 	_shield_sprite.texture = SHIELD_TEXTURE
+	_shield_sprite.hframes = SHIELD_FRAMES
+	_shield_sprite.scale = BASE_SCALE
 	_shield_sprite.visible = false
 	add_child(_shield_sprite)
 
@@ -120,7 +123,19 @@ func _end_timed_power() -> void:
 
 func _set_shield(on: bool) -> void:
 	has_shield = on
-	_shield_sprite.visible = on
+	var tween := _shield_sprite.create_tween()
+	if on:
+		# Blow the bubble up around Terry
+		_shield_sprite.visible = true
+		_shield_sprite.modulate.a = 1.0
+		_shield_sprite.scale = BASE_SCALE * 0.3
+		tween.tween_property(_shield_sprite, "scale", BASE_SCALE, 0.25).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	else:
+		# Pop: the bubble swells and fades out
+		tween.set_parallel()
+		tween.tween_property(_shield_sprite, "scale", BASE_SCALE * 1.5, 0.18).set_ease(Tween.EASE_OUT)
+		tween.tween_property(_shield_sprite, "modulate:a", 0.0, 0.18)
+		tween.chain().tween_callback(_shield_sprite.hide)
 
 func _set_music_pitch(pitch: float) -> void:
 	for player in get_tree().get_nodes_in_group("audio"):
@@ -145,7 +160,7 @@ func _process(delta: float) -> void:
 		sprite.visible = _grace_left <= 0.0 or fmod(_grace_left, 0.16) > 0.08
 
 	if has_shield:
-		_shield_sprite.modulate.a = 0.65 + 0.35 * sin(Time.get_ticks_msec() / 150.0)
+		_shield_sprite.frame = int(Time.get_ticks_msec() / 90.0) % SHIELD_FRAMES
 
 	match timed_power:
 		"katana":

@@ -40,7 +40,7 @@ func _ready() -> void:
 	_depth_label.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	add_child(_depth_label)
 
-	_shield_icon = _icon(Powerup.ICONS.shield.texture, 28)
+	_shield_icon = _icon(_power_texture("shield"), 28)
 	_shield_icon.position = Vector2(12, 40)
 	_shield_icon.visible = false
 	add_child(_shield_icon)
