@@ -15,6 +15,9 @@ const MAGNET_PULL := 700.0
 # After the shield pops Terry smashes through hazards for a moment instead of dying.
 const SHIELD_GRACE := 1.0
 const BASE_SCALE := Vector2(2, 2)
+# Terry's center sits this far below the top of the screen, plus half his height,
+# so his sprite starts below the HUD rows.
+const TOP_MARGIN := 75.0
 
 var column_index: int = 0
 
@@ -34,6 +37,8 @@ var _katana_sprite: Sprite2D
 
 func _ready() -> void:
 	camera = get_viewport().get_camera_2d()
+	# Draw Terry over hazards and beams so he's never hidden
+	z_index = 9
 
 	connect("player_died", Callable(game_manager, "on_player_died"))
 	column_index = column_manager.column_positions.size() / 2
@@ -59,7 +64,8 @@ func _on_viewport_size_changed() -> void:
 	update_position()
 
 func update_position():
-	position.y = -((get_viewport_rect().size.y / camera.zoom.y) / 2) + 75
+	var half_height: float = sprite.sprite_frames.get_frame_texture(sprite.animation, 0).get_height() * BASE_SCALE.y / 2
+	position.y = -((get_viewport_rect().size.y / camera.zoom.y) / 2) + TOP_MARGIN + half_height
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemy"):
