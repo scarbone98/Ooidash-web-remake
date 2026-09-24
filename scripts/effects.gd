@@ -13,7 +13,14 @@ static func popup_text(parent: Node, text: String, at: Vector2, color: Color = S
 	label.add_theme_constant_override("outline_size", 6)
 	label.z_index = 20
 	parent.add_child(label)
-	label.global_position = at - Vector2(label.get_combined_minimum_size().x / 2, 20)
+	var width := label.get_combined_minimum_size().x
+	label.global_position = at - Vector2(width / 2, 20)
+	# Keep popups near the screen edge fully on screen
+	var camera := parent.get_viewport().get_camera_2d()
+	if camera:
+		var half_width := parent.get_viewport().get_visible_rect().size.x / camera.zoom.x / 2
+		var center_x := camera.get_screen_center_position().x
+		label.global_position.x = clampf(label.global_position.x, center_x - half_width + 8, center_x + half_width - width - 8)
 
 	var tween := label.create_tween().set_parallel()
 	tween.tween_property(label, "position:y", label.position.y + 60, 0.6).set_ease(Tween.EASE_OUT)

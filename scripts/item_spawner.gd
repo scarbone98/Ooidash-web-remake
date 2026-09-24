@@ -20,18 +20,18 @@ func _on_row_spawned(open_positions: Array, speed: float) -> void:
 		_since_power = 0.0
 		var powerup := Powerup.new()
 		powerup.power = _pick_power()
-		_place(powerup, free_positions.pop_back(), speed)
+		place(powerup, free_positions.pop_back(), speed)
 
 	for item in items:
 		if free_positions.is_empty():
 			break
 		if randf() <= item.spawn_probability:
-			_place(item.item_scene.instantiate(), free_positions.pop_back(), speed)
+			place(item.item_scene.instantiate(), free_positions.pop_back(), speed)
 
-func _place(item: Item, at: Vector2, speed: float) -> void:
+func place(item: Item, at: Vector2, speed: float) -> void:
 	item.move_speed = speed
 	item.position = at
-	item.auto_destroy_height = -at.y - 80
+	item.auto_destroy_height = -get_viewport_rect().size.y / 2 - 80
 	add_child(item)
 
 func _should_spawn_power() -> bool:

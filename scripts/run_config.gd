@@ -17,7 +17,9 @@ const ROW_GAP_PER_SPEED := 0.3
 
 # Each zone adds a new kind of hazard. `double_chance` is how often a row blocks
 # two lanes instead of one; `special_chance` is how often a row carries one of the
-# zone's special hazards, picked by `specials` weight.
+# zone's special hazards, picked by `specials` weight. `far_gap_chance` is how
+# often the only gap sits two lanes from Terry (that row comes a little later so
+# the double step is always possible). `boss` names the Boss that guards the zone.
 const ZONES := [
 	{
 		"name": "Low Orbit",
@@ -26,6 +28,7 @@ const ZONES := [
 		"double_chance": 0.2,
 		"special_chance": 0.0,
 		"specials": {},
+		"far_gap_chance": 0.1,
 	},
 	{
 		"name": "Comet Belt",
@@ -34,6 +37,8 @@ const ZONES := [
 		"double_chance": 0.3,
 		"special_chance": 0.3,
 		"specials": {"comet": 1},
+		"far_gap_chance": 0.15,
+		"boss": "ufo",
 	},
 	{
 		"name": "Haunted Void",
@@ -42,6 +47,8 @@ const ZONES := [
 		"double_chance": 0.4,
 		"special_chance": 0.4,
 		"specials": {"comet": 1, "ghost": 2},
+		"far_gap_chance": 0.2,
+		"boss": "shadowbeast",
 	},
 	{
 		"name": "Skull Storm",
@@ -50,6 +57,8 @@ const ZONES := [
 		"double_chance": 0.5,
 		"special_chance": 0.5,
 		"specials": {"comet": 1, "ghost": 1, "skull": 2},
+		"far_gap_chance": 0.25,
+		"boss": "scarecrow",
 	},
 	{
 		"name": "The Abyss",
@@ -58,8 +67,19 @@ const ZONES := [
 		"double_chance": 0.6,
 		"special_chance": 0.6,
 		"specials": {"comet": 1, "ghost": 1, "skull": 1},
+		"far_gap_chance": 0.3,
+		"boss": "swampthing",
 	},
 ]
+
+# Rows that put the gap two lanes away are spaced this much further apart.
+const FAR_GAP_SPACING := 1.35
+
+# Bosses: rows stop, the boss rises from below and attacks until its health
+# (seconds of survival) runs out. Katana slices on its shots deal extra damage.
+const BOSS_ARRIVAL_DELAY := 2.0
+const BOSS_BONUS := 100
+const BOSS_SLICE_DAMAGE := 1.5
 
 const GEM_BONUS := 10
 const SLICE_BONUS := 5

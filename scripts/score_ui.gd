@@ -5,6 +5,7 @@ extends Control
 @onready var label: Label = $VBoxContainer/Label
 
 const BAR_WIDTH := 64.0
+const BOSS_BAR_WIDTH := 120.0
 
 var _shown_score := -1
 var _depth_label: Label
@@ -14,6 +15,9 @@ var _power_fill: ColorRect
 var _shown_power := ""
 var _shield_icon: TextureRect
 var _slow_tint: ColorRect
+var _boss_box: VBoxContainer
+var _boss_name: Label
+var _boss_fill: ColorRect
 
 func _ready() -> void:
 	theme = ScareathonTheme.build()
@@ -62,8 +66,34 @@ func _ready() -> void:
 	_power_fill.size = Vector2(BAR_WIDTH, 8)
 	bar.add_child(_power_fill)
 
+	_build_boss_bar()
 	game_manager.zone_changed.connect(_show_zone_banner)
 	_show_hint()
+
+func _build_boss_bar() -> void:
+	_boss_box = VBoxContainer.new()
+	_boss_box.add_theme_constant_override("separation", 2)
+	_boss_box.anchor_left = 0.5
+	_boss_box.anchor_right = 0.5
+	_boss_box.offset_left = -BOSS_BAR_WIDTH / 2
+	_boss_box.offset_right = BOSS_BAR_WIDTH / 2
+	_boss_box.offset_top = 34
+	_boss_box.visible = false
+	add_child(_boss_box)
+	_boss_name = Label.new()
+	_boss_name.theme_type_variation = "HintLabel"
+	_boss_name.add_theme_color_override("font_color", ScareathonTheme.BLOOD)
+	_boss_name.add_theme_font_size_override("font_size", 15)
+	_boss_name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_boss_box.add_child(_boss_name)
+	var bar := ColorRect.new()
+	bar.color = Color(ScareathonTheme.BLOOD_DARK, 0.85)
+	bar.custom_minimum_size = Vector2(BOSS_BAR_WIDTH, 10)
+	_boss_box.add_child(bar)
+	_boss_fill = ColorRect.new()
+	_boss_fill.color = ScareathonTheme.BLOOD
+	_boss_fill.size = Vector2(BOSS_BAR_WIDTH, 10)
+	bar.add_child(_boss_fill)
 
 func _icon(texture: Texture2D, size: float) -> TextureRect:
 	var icon := TextureRect.new()
@@ -98,6 +128,12 @@ func _process(delta: float) -> void:
 			_power_icon.texture = _power_texture(_shown_power)
 	_power_fill.size.x = BAR_WIDTH * player.timed_ratio()
 
+	var boss := get_tree().get_first_node_in_group("boss")
+	_boss_box.visible = boss != null
+	if boss:
+		_boss_name.text = boss.display_name()
+		_boss_fill.size.x = BOSS_BAR_WIDTH * boss.health_ratio()
+
 	var target_tint := 0.14 if player.timed_power == "slow" else 0.0
 	_slow_tint.color.a = move_toward(_slow_tint.color.a, target_tint, delta * 0.6)
 
@@ -116,7 +152,7 @@ func _show_zone_banner(index: int) -> void:
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	box.add_child(title)
 	var sub := Label.new()
-	sub.text = "%d m" % zone.depth
+	sub.text = "%s approaches!" % Boss.BOSSES[zone.boss].name if zone.has("boss") else "%d m" % zone.depth
 	sub.theme_type_variation = "HintLabel"
 	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	box.add_child(sub)

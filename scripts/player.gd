@@ -73,7 +73,7 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 func _on_hazard_hit(hazard: Area2D) -> void:
 	if hazard is Hazard and hazard.is_dead():
 		return
-	if timed_power == "katana":
+	if timed_power == "katana" and hazard is Hazard:
 		_slash(hazard)
 	elif _grace_left > 0.0:
 		hazard.break_apart()
@@ -192,6 +192,10 @@ func _slash(hazard: Area2D) -> void:
 	swing.tween_property(_katana_sprite, "rotation", 0.0, 0.12)
 
 	hazard.break_apart()
+	if hazard is Hazard and hazard.boss_shot:
+		var boss := get_tree().get_first_node_in_group("boss")
+		if boss:
+			boss.take_hit(RunConfig.BOSS_SLICE_DAMAGE)
 	game_manager.add_bonus(RunConfig.SLICE_BONUS)
 	Effects.popup_text(get_parent(), "+%d" % RunConfig.SLICE_BONUS, hazard.global_position, ScareathonTheme.BONE, 24)
 	Effects.shake(camera, 3.0)
