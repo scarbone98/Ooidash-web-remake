@@ -15,7 +15,7 @@ const KINDS := {
 	"comet": {"texture": preload("res://assets/sprites/comet.png"), "frames": 1, "scale": 1.5, "radius": 18.0, "spin": 220.0, "speed_mult": 1.7, "trail": Color("#67e8f9")},
 	"ghost": {"texture": preload("res://assets/sprites/ghost.png"), "frames": 6, "fps": 8.0, "scale": 2.6, "radius": 20.0, "alpha": 0.9},
 	"pumpkin": {"texture": preload("res://assets/sprites/pumpkin.png"), "frames": 6, "fps": 8.0, "scale": 2.8, "radius": 18.0, "spin": 160.0, "trail": Color("#fb923c")},
-	"skull": {"texture": preload("res://assets/sprites/skull.png"), "frames": 8, "fps": 10.0, "scale": 2.7, "radius": 19.0, "speed_mult": 1.4, "trail": Color("#f97316")},
+	"skull": {"texture": preload("res://assets/sprites/skull.png"), "frames": 6, "fps": 10.0, "scale": 2.4, "radius": 19.0, "speed_mult": 1.4, "trail": Color("#f97316")},
 }
 
 # Ghosts lean toward their target lane below this height, then drift at drift_y.

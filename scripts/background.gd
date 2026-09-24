@@ -15,21 +15,27 @@ var planet_timer: Timer
 func get_random_int_in_range(min: int, max: int) -> int:
 	return randi() % (max - min + 1) + min
 
+# This node is rotated 90°, so local x runs along the screen's height and local y
+# along its width. Returns the visible half size in those local axes.
 func _visible_half_size() -> Vector2:
-	return get_viewport_rect().size / camera.zoom / 2
+	var half: Vector2 = get_viewport_rect().size / camera.zoom / 2
+	return Vector2(half.y, half.x)
 
-func _get_random_spawn_position() -> Vector2:
-	# Spawn just past the right edge of the view, at a random height
-	var center = to_local(camera.get_screen_center_position())
-	var half = _visible_half_size()
-	return Vector2(center.x + half.x + 150, center.y + randf_range(-half.y, half.y))
+# Half the sprite's diagonal, so it is fully off screen at this distance past the edge.
+func _sprite_radius(sprite: AnimatedSprite2D) -> float:
+	var texture := sprite.sprite_frames.get_frame_texture(sprite.animation, 0)
+	return texture.get_size().length() / 2 * maxf(sprite.scale.x, sprite.scale.y)
 
 func _spawn_bg_element(sprite: AnimatedSprite2D, speed: float) -> Node2D:
+	var center = to_local(camera.get_screen_center_position())
+	var half = _visible_half_size()
+	var margin := _sprite_radius(sprite) + 20
 	var bg_item = bg_element.instantiate()
 	bg_item.sprite = sprite
 	bg_item.move_speed = speed
-	bg_item.position = _get_random_spawn_position()
-	bg_item.auto_destroy_x = to_local(camera.get_screen_center_position()).x - _visible_half_size().x - 150
+	# Start fully below the screen and leave only once fully above it
+	bg_item.position = Vector2(center.x + half.x + margin, center.y + randf_range(-half.y, half.y))
+	bg_item.auto_destroy_x = center.x - half.x - margin
 	add_child(bg_item)
 	return bg_item
 	
