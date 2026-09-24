@@ -92,7 +92,6 @@ func launch_shot(lane: int, kind: String, from_y: float) -> Hazard:
 	var hazard := Hazard.new()
 	hazard.kind = kind
 	hazard.speed = game_manager.current_speed() * Hazard.KINDS[kind].get("speed_mult", 1.0)
-	hazard.boss_shot = true
 	hazard.auto_destroy_height = -_half_view_height() - 80
 	hazard.position = Vector2(lane_x(lane), from_y)
 	add_child(hazard)

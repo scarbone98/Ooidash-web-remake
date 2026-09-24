@@ -76,10 +76,9 @@ const ZONES := [
 const FAR_GAP_SPACING := 1.35
 
 # Bosses: rows stop, the boss rises from below and attacks until its health
-# (seconds of survival) runs out. Katana slices on its shots deal extra damage.
+# (seconds of survival) runs out. Only surviving drains it; the katana doesn't.
 const BOSS_ARRIVAL_DELAY := 2.0
 const BOSS_BONUS := 100
-const BOSS_SLICE_DAMAGE := 1.5
 
 const GEM_BONUS := 10
 const SLICE_BONUS := 5

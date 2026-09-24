@@ -27,8 +27,6 @@ var speed := 200.0
 var delay := 0.0
 var auto_destroy_height := -1000.0
 var drift_to_x := NAN
-# Fired by a boss; katana slices on these damage the boss.
-var boss_shot := false
 
 var _def: Dictionary
 var _sprite: Sprite2D

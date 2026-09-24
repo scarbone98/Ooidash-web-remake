@@ -2,7 +2,7 @@ class_name Boss
 extends Node2D
 
 # A zone boss. It rises from below Terry and fires lane attacks until its health
-# (seconds of survival) runs out; katana slices on its shots take extra health.
+# (seconds of survival) runs out. The katana can slice its shots but never hurts it.
 # Attacks are weighted per boss:
 #   volley    one or two lanes at once
 #   far_wall  every lane but one, with the gap as far from Terry as possible
@@ -93,13 +93,6 @@ func display_name() -> String:
 
 func health_ratio() -> float:
 	return clampf(health / max_health, 0.0, 1.0)
-
-func take_hit(amount: float) -> void:
-	if _defeated:
-		return
-	health -= amount
-	_sprite.modulate = Color(2.5, 2.5, 2.5)
-	create_tween().tween_property(_sprite, "modulate", Color.WHITE, 0.2)
 
 func _process(delta: float) -> void:
 	_age += delta

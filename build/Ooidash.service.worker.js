@@ -4,7 +4,7 @@
 // Incrementing CACHE_VERSION will kick off the install event and force
 // previously cached resources to be updated from the network.
 /** @type {string} */
-const CACHE_VERSION = '1790218014|1859801';
+const CACHE_VERSION = '1790218509|1768056';
 /** @type {string} */
 const CACHE_PREFIX = 'Ooidash-sw-cache-';
 const CACHE_NAME = CACHE_PREFIX + CACHE_VERSION;
